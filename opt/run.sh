@@ -12,9 +12,11 @@ zones=""
 
 IFS=';' read -ra entries <<< "$HOSTS"
 for zone in "${entries[@]}"; do
+  # trim whitespace
   zone="${zone#"${zone%%[![:space:]]*}"}"
   zone="${zone%"${zone##*[![:space:]]}"}"
-  echo "Routing $zone to $IPADDRESS";
+
+  echo "Resolving $zone to $IPADDRESS";
   zones="$zones
   $(cat << !
 zone "$zone" IN {
